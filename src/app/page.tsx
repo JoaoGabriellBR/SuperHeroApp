@@ -3,19 +3,15 @@
 import Header from "@/components/Header";
 import Image from "next/image";
 import batman from "../../public/batman.png";
-
-import Tab from "@mui/material/Tab";
-import TabContext from "@mui/lab/TabContext";
-import TabList from "@mui/lab/TabList";
-import TabPanel from "@mui/lab/TabPanel";
-
 import { useState } from "react";
 import { Poppins } from "next/font/google";
+
+import PowerStats from "@/components/PowerStats"
 
 const poppins = Poppins({ subsets: ["latin"], weight: "100" });
 
 export default function Home() {
-  const [value, setValue] = useState("");
+  const [activeTab, setActiveTab] = useState("poderes");
 
   const tabsData = [
     { label: "Poderes", value: "poderes" },
@@ -49,11 +45,29 @@ export default function Home() {
 
           <div className="w-full">
             <div className="flex flex-row justify-between items-center">
-              {tabsData?.map((tab) => (
-                <p className={tabsStyle}>{tab?.label}</p>
-              ))}
+            {tabsData?.map((tab) => (
+              <p
+                key={tab.value}
+                className={
+                  tab.value === activeTab
+                    ? `${tabsStyle} border-b-2 border-red-500`
+                    : tabsStyle
+                }
+                onClick={() => setActiveTab(tab.value)}
+              >
+                {tab.label}
+              </p>
+            ))}
             </div>
           </div>
+
+            {/* CONTENT BASED ON ACTIVE TAB */}
+        <div className="mt-4">
+          {activeTab === "poderes" && <PowerStats/>}
+          {activeTab === "biografia" && <p>Conteúdo da biografia do Batman.</p>}
+          {activeTab === "aparencia" && <p>Conteúdo da aparência do Batman.</p>}
+          {activeTab === "conexoes" && <p>Conteúdo das conexões do Batman.</p>}
+        </div>
           
         </div>
       </main>
