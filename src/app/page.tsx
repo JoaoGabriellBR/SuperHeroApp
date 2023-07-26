@@ -1,17 +1,28 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import Header from "@/components/Header";
 import Image from "next/image";
-import batman from "../../public/batman.png";
-import { useState } from "react";
 import { Poppins } from "next/font/google";
 
-import PowerStats from "@/components/PowerStats"
+import PowerStats from "@/components/PowerStats";
+import fetchCharacterData from "@/services/fetchCharacterData";
+import Biography from "@/components/Biography";
+import Appearance from "@/components/Appearance";
+import Connections from "@/components/Connections";
+
+type CharacterData = {
+  name: string;
+  image?: {
+    url: string;
+  };
+};
 
 const poppins = Poppins({ subsets: ["latin"], weight: "100" });
 
 export default function Home() {
   const [activeTab, setActiveTab] = useState("poderes");
+  const [characterData, setCharacterData] = useState<CharacterData>("Superman");
 
   const tabsData = [
     { label: "Poderes", value: "poderes" },
@@ -23,52 +34,70 @@ export default function Home() {
   const tabsStyle: string =
     "text-[1.2rem] font-semibold text-white cursor-pointer hover:border-b-2 border-red-500";
 
+  const loadData = async () => {
+    const data = await fetchCharacterData(characterData);
+    setCharacterData(data);
+  };
+
+  useEffect(() => {
+    loadData();
+  }, []);
+
   return (
     <>
       <Header search="search" />
-      <main className="flex flex-col md:flex-row items-center justify-between w-[100%] h-screen p-2 md:p-10">
+      <main
+        className={`${poppins.className} flex flex-col md:flex-row items-center justify-between w-[100%] h-screen p-2 md:p-10`}
+      >
         {/* DIV IMAGE */}
         <div className="w-[100%] md:w-[40%] h-[100%]">
           <Image
-            src={batman}
+            src={characterData?.image?.url ?? ""}
+            alt={String(characterData?.name)}
             width="400"
             height="400"
-            alt="Picture of the author"
           />
         </div>
 
         {/* DIV CHARACTER STATS */}
         <div className="w-[100%] md:w-[60%] h-[100%]">
-
           {/* TABS */}
-          <p className="text-[2rem] font-semibold mb-[1.5rem]">Batman</p>
+          <p className="text-[2rem] font-semibold mb-[1.5rem]">
+            {characterData?.name}
+          </p>
 
           <div className="w-full">
             <div className="flex flex-row justify-between items-center">
-            {tabsData?.map((tab) => (
-              <p
-                key={tab.value}
-                className={
-                  tab.value === activeTab
-                    ? `${tabsStyle} border-b-2 border-red-500`
-                    : tabsStyle
-                }
-                onClick={() => setActiveTab(tab.value)}
-              >
-                {tab.label}
-              </p>
-            ))}
+              {tabsData?.map((tab) => (
+                <p
+                  key={tab.value}
+                  className={
+                    tab.value === activeTab
+                      ? `${tabsStyle} border-b-2 border-red-500`
+                      : tabsStyle
+                  }
+                  onClick={() => setActiveTab(tab.value)}
+                >
+                  {tab.label}
+                </p>
+              ))}
             </div>
           </div>
 
-            {/* CONTENT BASED ON ACTIVE TAB */}
-        <div className="mt-4">
-          {activeTab === "poderes" && <PowerStats/>}
-          {activeTab === "biografia" && <p>Conteúdo da biografia do Batman.</p>}
-          {activeTab === "aparencia" && <p>Conteúdo da aparência do Batman.</p>}
-          {activeTab === "conexoes" && <p>Conteúdo das conexões do Batman.</p>}
-        </div>
-          
+          <div className="mt-4">
+            {activeTab === "poderes" && (
+              <PowerStats characterData={characterData} />
+            )}
+            {activeTab === "biografia" && (
+              <Biography characterData={characterData} />
+            )}
+            {activeTab === "aparencia" && (
+              <Appearance characterData={characterData} />
+            )}
+            {activeTab === "conexoes" && (
+              <Connections characterData={characterData} />
+            )}
+          </div>
         </div>
       </main>
     </>
