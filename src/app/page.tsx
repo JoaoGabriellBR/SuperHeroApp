@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import Header from "@/components/Header";
 import Image from "next/image";
-import { Poppins } from "next/font/google";
+import { Inter } from "next/font/google";
 
 import PowerStats from "@/components/PowerStats";
 import fetchCharacterData from "@/services/fetchCharacterData";
@@ -18,7 +18,7 @@ type CharacterData = {
   };
 };
 
-const poppins = Poppins({ subsets: ["latin"], weight: "100" });
+const inter = Inter({ subsets: ["latin"], weight: "100" });
 
 export default function Home() {
   const [activeTab, setActiveTab] = useState("poderes");
@@ -47,7 +47,7 @@ export default function Home() {
     <>
       <Header search="search" />
       <main
-        className={`${poppins.className} flex flex-col md:flex-row items-center justify-between w-[100%] h-screen p-2 md:p-10`}
+        className={`${inter.className} flex flex-col md:flex-row items-center justify-between w-[100%] h-screen p-2 md:p-10`}
       >
         {/* DIV IMAGE */}
         <div className="w-[100%] md:w-[40%] h-[100%]">
