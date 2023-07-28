@@ -1,16 +1,16 @@
 import fetchCharacterData from "@/services/fetchCharacterData";
 import { useState } from "react";
 
-interface SearchCharacter {
-  search: any;
+interface OnSearch {
+  onSearch: (data: any) => void;
 }
 
-export default function Header({ search }: SearchCharacter) {
+export default function Header({ onSearch }: OnSearch) {
   const [searchCharacter, setSearchCharacter] = useState();
 
-  const loadData = async () => {
+  const handleSearch = async () => {
     const response = await fetchCharacterData(searchCharacter);
-    setSearchCharacter(response);
+    onSearch(response);
   };
 
   return (
@@ -37,7 +37,8 @@ export default function Header({ search }: SearchCharacter) {
         </div>
         <input
           value={searchCharacter}
-          onChange={() => setSearchCharacter(e.target.value)}
+          onChange={(e: any) => setSearchCharacter(e.target.value)}
+          onKeyDown={(e) => e.key === "Enter" && handleSearch()}
           className="bg-transparent w-full h-[3rem] pl-[3rem] rounded-full text-gray-400 font-bold border-solid border-[0.5px] border-gray-500 outline-none"
           placeholder="Pesquise um personagem"
         />

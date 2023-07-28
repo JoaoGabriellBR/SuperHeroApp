@@ -1,11 +1,10 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import Header from "@/components/Header";
 import Image from "next/image";
 
 import PowerStats from "@/components/PowerStats";
-import fetchCharacterData from "@/services/fetchCharacterData";
 import Biography from "@/components/Biography";
 import Appearance from "@/components/Appearance";
 import Connections from "@/components/Connections";
@@ -19,8 +18,10 @@ type CharacterData = {
 
 export default function Home() {
   const [activeTab, setActiveTab] = useState("poderes");
-  const [characterData, setCharacterData] = useState<CharacterData>("Superman");
+  const [characterData, setCharacterData] = useState<CharacterData>();
 
+  const tabsStyle =
+    "text-[1.2rem] font-semibold text-white cursor-pointer hover:border-b-2 border-red-500";
   const tabsData = [
     { label: "Poderes", value: "poderes" },
     { label: "Biografia", value: "biografia" },
@@ -28,33 +29,28 @@ export default function Home() {
     { label: "Conexões", value: "conexoes" },
   ];
 
-  const tabsStyle: string =
-    "text-[1.2rem] font-semibold text-white cursor-pointer hover:border-b-2 border-red-500";
-
-  const loadData = async () => {
-    const data = await fetchCharacterData(characterData);
+  const handleChangeCharacterData = (data: any) => {
     setCharacterData(data);
   };
 
   useEffect(() => {
-    loadData();
-  }, []);
+    console.log(characterData);
+  }, [characterData]);
 
   return (
     <>
-      <Header search="search" />
+      <Header onSearch={handleChangeCharacterData} />
       <main
         className={`flex flex-col md:flex-row items-center justify-between w-[100%] h-screen p-2 md:p-10`}
       >
         {/* DIV IMAGE */}
         <div className={`w-[100%] md:w-[40%] h-[100%]`}>
-          {/* <Image
+          <Image
             src={characterData?.image?.url ?? ""}
             alt={String(characterData?.name)}
             width="400"
             height="400"
-          /> */}
-          <h1>teste</h1>
+          />
         </div>
 
         {/* DIV CHARACTER STATS */}
