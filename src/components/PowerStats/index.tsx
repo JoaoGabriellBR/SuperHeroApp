@@ -30,10 +30,10 @@ export default function PowerStats({ characterData }: { characterData: any }) {
             >
               <div className="flex flex-row justify-between items-center">
                 <FaSuperpowers />
-                <p className="ml-2">{translatedStat}</p>{" "}
+                <h1 className="text-[1rem] ml-2">{translatedStat}</h1>{" "}
               </div>
 
-              <p className="text-[1.3rem] text-red-500 text-bold">{value}</p>
+              <p className="text-[1rem] font-semibold">{value}</p>
             </div>
           );
         }

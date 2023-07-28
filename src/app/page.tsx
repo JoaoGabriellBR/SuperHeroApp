@@ -3,7 +3,6 @@
 import { useState, useEffect } from "react";
 import Header from "@/components/Header";
 import Image from "next/image";
-import { Inter } from "next/font/google";
 
 import PowerStats from "@/components/PowerStats";
 import fetchCharacterData from "@/services/fetchCharacterData";
@@ -17,8 +16,6 @@ type CharacterData = {
     url: string;
   };
 };
-
-const inter = Inter({ subsets: ["latin"], weight: "100" });
 
 export default function Home() {
   const [activeTab, setActiveTab] = useState("poderes");
@@ -47,16 +44,17 @@ export default function Home() {
     <>
       <Header search="search" />
       <main
-        className={`${inter.className} flex flex-col md:flex-row items-center justify-between w-[100%] h-screen p-2 md:p-10`}
+        className={`flex flex-col md:flex-row items-center justify-between w-[100%] h-screen p-2 md:p-10`}
       >
         {/* DIV IMAGE */}
-        <div className="w-[100%] md:w-[40%] h-[100%]">
-          <Image
+        <div className={`w-[100%] md:w-[40%] h-[100%]`}>
+          {/* <Image
             src={characterData?.image?.url ?? ""}
             alt={String(characterData?.name)}
             width="400"
             height="400"
-          />
+          /> */}
+          <h1>teste</h1>
         </div>
 
         {/* DIV CHARACTER STATS */}

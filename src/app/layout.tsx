@@ -1,9 +1,9 @@
 
 import "./globals.css";
 import type { Metadata } from "next";
-import { Poppins } from "next/font/google";
+import { Raleway } from "next/font/google";
 
-const poppins = Poppins({ subsets: ["latin"], weight: "100" });
+const raleway = Raleway({ subsets: ["latin"], weight: "100" });
 
 export const metadata: Metadata = {
   title: "Super Hero App",
@@ -17,7 +17,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`${poppins.className} bg-neutral-900`}>{children}</body>
+      <body className={`${raleway.className} bg-neutral-900`}>{children}</body>
     </html>
   );
 }
