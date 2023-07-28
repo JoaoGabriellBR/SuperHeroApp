@@ -3,7 +3,6 @@
 import { useEffect, useState } from "react";
 import Header from "@/components/Header";
 import Image from "next/image";
-
 import PowerStats from "@/components/PowerStats";
 import Biography from "@/components/Biography";
 import Appearance from "@/components/Appearance";
@@ -19,9 +18,11 @@ type CharacterData = {
 export default function Home() {
   const [activeTab, setActiveTab] = useState("poderes");
   const [characterData, setCharacterData] = useState<CharacterData>();
+  const [loading, setLoading] = useState(false);
 
   const tabsStyle =
     "text-[1.2rem] font-semibold text-white cursor-pointer hover:border-b-2 border-red-500";
+
   const tabsData = [
     { label: "Poderes", value: "poderes" },
     { label: "Biografia", value: "biografia" },
@@ -29,71 +30,74 @@ export default function Home() {
     { label: "Conexões", value: "conexoes" },
   ];
 
-  const handleChangeCharacterData = (data: any) => {
-    setCharacterData(data);
-  };
-
-  useEffect(() => {
-    console.log(characterData);
-  }, [characterData]);
+  const handleSearch = (data: any) => setCharacterData(data);
+  const handleLoading = (value: any) => setLoading(value);
 
   return (
     <>
-      <Header onSearch={handleChangeCharacterData} />
-      <main
-        className={`flex flex-col md:flex-row items-center justify-between w-[100%] h-screen p-2 md:p-10`}
-      >
-        {/* DIV IMAGE */}
-        <div className={`w-[100%] md:w-[40%] h-[100%]`}>
-          <Image
-            src={characterData?.image?.url ?? ""}
-            alt={String(characterData?.name)}
-            width="400"
-            height="400"
-          />
-        </div>
+      <Header onSearch={handleSearch} onLoading={handleLoading} />
+      {loading ? (
+        <h1 className="self-center">Carregando...</h1>
+      ) : (
+        !characterData ? (
+          <h1>Nenhum personagem encontrado</h1>
+        ) : (
+        <main
+          className={`flex flex-col md:flex-row items-center justify-between w-[100%] h-screen p-2 md:p-10`}
+        >
+          {/* DIV IMAGE */}
+          <div className={`w-[100%] md:w-[40%] h-[100%]`}>
+            <Image
+              src={characterData?.image?.url ?? ""}
+              alt={String(characterData?.name)}
+              width="400"
+              height="400"
+            />
+          </div>
 
-        {/* DIV CHARACTER STATS */}
-        <div className="w-[100%] md:w-[60%] h-[100%]">
-          {/* TABS */}
-          <p className="text-[2rem] font-semibold mb-[1.5rem]">
-            {characterData?.name}
-          </p>
+          {/* DIV CHARACTER STATS */}
+          <div className="w-[100%] md:w-[60%] h-[100%]">
+            {/* TABS */}
+            <p className="text-[2rem] font-semibold mb-[1.5rem]">
+              {characterData?.name}
+            </p>
 
-          <div className="w-full">
-            <div className="flex flex-row justify-between items-center">
-              {tabsData?.map((tab) => (
-                <p
-                  key={tab.value}
-                  className={
-                    tab.value === activeTab
-                      ? `${tabsStyle} border-b-2 border-red-500`
-                      : tabsStyle
-                  }
-                  onClick={() => setActiveTab(tab.value)}
-                >
-                  {tab.label}
-                </p>
-              ))}
+            <div className="w-full">
+              <div className="flex flex-row justify-between items-center">
+                {tabsData?.map((tab) => (
+                  <p
+                    key={tab.value}
+                    className={
+                      tab.value === activeTab
+                        ? `${tabsStyle} border-b-2 border-red-500`
+                        : tabsStyle
+                    }
+                    onClick={() => setActiveTab(tab.value)}
+                  >
+                    {tab.label}
+                  </p>
+                ))}
+              </div>
+            </div>
+
+            <div className="mt-4">
+              {activeTab === "poderes" && (
+                <PowerStats characterData={characterData} />
+              )}
+              {activeTab === "biografia" && (
+                <Biography characterData={characterData} />
+              )}
+              {activeTab === "aparencia" && (
+                <Appearance characterData={characterData} />
+              )}
+              {activeTab === "conexoes" && (
+                <Connections characterData={characterData} />
+              )}
             </div>
           </div>
-
-          <div className="mt-4">
-            {activeTab === "poderes" && (
-              <PowerStats characterData={characterData} />
-            )}
-            {activeTab === "biografia" && (
-              <Biography characterData={characterData} />
-            )}
-            {activeTab === "aparencia" && (
-              <Appearance characterData={characterData} />
-            )}
-            {activeTab === "conexoes" && (
-              <Connections characterData={characterData} />
-            )}
-          </div>
-        </div>
-      </main>
+        </main>
+        )
+      )}
     </>
   );
 }

@@ -1,16 +1,24 @@
 import fetchCharacterData from "@/services/fetchCharacterData";
 import { useState } from "react";
 
-interface OnSearch {
+interface OnFunctions {
   onSearch: (data: any) => void;
+  onLoading: (value: any) => void;
 }
 
-export default function Header({ onSearch }: OnSearch) {
+export default function Header({ onSearch, onLoading }: OnFunctions) {
   const [searchCharacter, setSearchCharacter] = useState();
 
   const handleSearch = async () => {
-    const response = await fetchCharacterData(searchCharacter);
-    onSearch(response);
+    onLoading(true);
+    try {
+      const response = await fetchCharacterData(searchCharacter);
+      onSearch(response);
+      onLoading(false);
+    } catch (e: any) {
+      console.log(e.message);
+      onLoading(false);
+    }
   };
 
   return (
