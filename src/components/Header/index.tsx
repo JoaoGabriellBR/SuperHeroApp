@@ -12,7 +12,7 @@ export default function Header({ onSearch, onLoading }: OnFunctions) {
   const handleSearch = async () => {
     onLoading(true);
     try {
-      const response = await fetchCharacterData(searchCharacter);
+      const response = await fetchCharacterData(String(searchCharacter));
       onSearch(response);
       onLoading(false);
     } catch (e: any) {

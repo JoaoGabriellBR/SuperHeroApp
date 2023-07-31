@@ -59,19 +59,19 @@ export default function Home() {
           </h1>
         ) : (
           <>
-            <div>
-              <Image
-                className="rounded-[2rem]"
-                src={characterData?.image?.url ?? ""}
-                alt={String(characterData?.name)}
-                width={400}
-                height={800}
-                layout="responsive"
-              />
+            <div className="w-[90%] md:w-[30%] my-7 md:my-0 avatar flex justify-center items-center">
+              <div className="w-72 md:w-[100%] h-72 md:h-[100%] rounded-full md:rounded-[3rem] ring ring-red-600 ring-offset-2 overflow-hidden">
+                <Image
+                  src={characterData?.image?.url ?? ""}
+                  alt={String(characterData?.name)}
+                  width={400}
+                  height={400}
+                  layout="responsive"
+                />
+              </div>
             </div>
 
             <div className="w-[90%] md:w-[70%] h-[100%] ml-0 md:ml-[3rem]">
-              {/* TABS */}
               <p className="text-[2rem] font-semibold mb-[1.5rem]">
                 {characterData?.name}
               </p>
