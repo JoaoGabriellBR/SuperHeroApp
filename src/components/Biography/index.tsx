@@ -1,13 +1,10 @@
 import { TbBiohazard } from "react-icons/tb";
-
-type BiographyProps = {
-  [key: string]: string;
-};
+import CharacterDataComponent from "@/components/CharacterDataComponent";
 
 export default function Biography({ characterData }: { characterData: any }) {
   const { biography } = characterData;
 
-  const translations: BiographyProps = {
+  const translations = {
     "full-name": "Nome Completo",
     "alter-egos": "Alter Egos",
     aliases: "Apelidos",
@@ -19,26 +16,11 @@ export default function Biography({ characterData }: { characterData: any }) {
 
   return (
     <>
-      {Object.entries(biography || {}).map(
-        ([stat, value]: any, index) => {
-          const translatedStat =
-            translations[stat as keyof BiographyProps];
-
-          return (
-            <div
-              key={index}
-              className="flex flex-row justify-between items-center py-2 pr-2 mb-[2rem] mt-[2rem]"
-            >
-              <div className="flex flex-row justify-between items-center">
-                <TbBiohazard />
-                <h1 className="text-[1rem] ml-2">{translatedStat}</h1>{" "}
-              </div>
-
-              <p className="text-[1rem] font-semibold">{value}</p>
-            </div>
-          );
-        }
-      )}
+      <CharacterDataComponent
+        step={biography}
+        translations={translations}
+        icon={<TbBiohazard />}
+      />
     </>
   );
 }

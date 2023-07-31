@@ -1,6 +1,6 @@
 import api from "./api";
 
-const fetchCharacterData = async (characterName: any) => {
+const fetchCharacterData = async (characterName: string) => {
   try {
     const response = await api.get(`/characters/${characterName}`);
     return response?.data?.data?.results?.find(

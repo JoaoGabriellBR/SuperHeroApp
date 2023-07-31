@@ -1,13 +1,10 @@
-"use client";
-
 import { FaSuperpowers } from "react-icons/fa";
-
-type PowerStatsTranslations = {
-  [key: string]: string;
-};
+import CharacterDataComponent from "@/components/CharacterDataComponent";
 
 export default function PowerStats({ characterData }: { characterData: any }) {
-  const translations: PowerStatsTranslations = {
+  const { powerstats } = characterData;
+
+  const translations = {
     combat: "Combate",
     durability: "Durabilidade",
     intelligence: "Inteligência",
@@ -18,26 +15,11 @@ export default function PowerStats({ characterData }: { characterData: any }) {
 
   return (
     <>
-      {Object.entries(characterData?.powerstats || {}).map(
-        ([stat, value]: any, index) => {
-          const translatedStat =
-            translations[stat as keyof PowerStatsTranslations];
-
-          return (
-            <div
-              key={index}
-              className="flex flex-row justify-between items-center py-2 pr-2 mb-[2rem] mt-[2rem]"
-            >
-              <div className="flex flex-row justify-between items-center">
-                <FaSuperpowers />
-                <h1 className="text-[1rem] ml-2">{translatedStat}</h1>{" "}
-              </div>
-
-              <p className="text-[1rem] font-semibold">{value}</p>
-            </div>
-          );
-        }
-      )}
+      <CharacterDataComponent
+        step={powerstats}
+        translations={translations}
+        icon={<FaSuperpowers />}
+      />
     </>
   );
 }
