@@ -1,12 +1,13 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Header from "@/components/Header";
 import Image from "next/image";
 import PowerStats from "@/components/PowerStats";
 import Biography from "@/components/Biography";
 import Appearance from "@/components/Appearance";
 import Connections from "@/components/Connections";
+import fetchCharacterData from "@/services/fetchCharacterData";
 
 type CharacterData = {
   name: string;
@@ -33,6 +34,15 @@ export default function Home() {
   const handleSearch = (data: any) => setCharacterData(data);
   const handleLoading = (value: any) => setLoading(value);
 
+  useEffect(() => {
+    const character = async () => {
+      const response = await fetchCharacterData("Batman II");
+      setCharacterData(response)
+    }
+
+    character();
+  }, [])
+
   return (
     <>
       <Header onSearch={handleSearch} onLoading={handleLoading} />
@@ -40,21 +50,27 @@ export default function Home() {
         className={`flex flex-col md:flex-row items-center justify-between w-[100%] h-screen p-2 md:p-10`}
       >
         {loading ? (
-          <h1 className="self-center">Carregando...</h1>
+          <h1 className="self-center md:self-start font-semibold">
+            Carregando...
+          </h1>
         ) : !characterData ? (
-          <h1>Nenhum personagem encontrado.</h1>
+          <h1 className="self-center md:self-start font-semibold">
+            Nenhum personagem encontrado.
+          </h1>
         ) : (
           <>
-            <div className={`w-[100%] md:w-[40%] h-[100%]`}>
+            <div>
               <Image
+                className="rounded-[2rem]"
                 src={characterData?.image?.url ?? ""}
                 alt={String(characterData?.name)}
-                width="400"
-                height="400"
+                width={400}
+                height={800}
+                layout="responsive"
               />
             </div>
 
-            <div className="w-[100%] md:w-[60%] h-[100%]">
+            <div className="w-[90%] md:w-[70%] h-[100%] ml-0 md:ml-[3rem]">
               {/* TABS */}
               <p className="text-[2rem] font-semibold mb-[1.5rem]">
                 {characterData?.name}
