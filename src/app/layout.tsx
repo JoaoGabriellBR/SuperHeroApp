@@ -17,7 +17,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`${raleway.className} bg-neutral-900`}>{children}</body>
+      <body className={`${raleway.className} bg-neutral-900 text-white`}>{children}</body>
     </html>
   );
 }

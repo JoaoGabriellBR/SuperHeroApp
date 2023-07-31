@@ -26,7 +26,7 @@ export default function Appearance({ characterData }: { characterData: any }) {
           return (
             <div
               key={index}
-              className="flex flex-row justify-between items-center py-2 pr-2 mb-[2rem] mt-[2rem] bg-neutral-950"
+              className="flex flex-row justify-between items-center py-2 pr-2 mb-[2rem] mt-[2rem] "
             >
               <div className="flex flex-row justify-between items-center">
                 <AiOutlineStar />
