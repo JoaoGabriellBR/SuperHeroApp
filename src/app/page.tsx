@@ -47,26 +47,27 @@ export default function Home() {
     <>
       <Header onSearch={handleSearch} onLoading={handleLoading} />
       <main
-        className={`flex flex-col md:flex-row items-center justify-between w-[100%] h-screen p-2 md:p-10`}
+        className={`flex flex-col md:flex-row items-center md:items-start justify-between w-[100%] h-screen p-2 md:p-10`}
       >
         {loading ? (
           <h1 className="self-center md:self-start font-semibold">
             Carregando...
           </h1>
         ) : !characterData ? (
-          <h1 className="self-center md:self-start font-semibold">
+          <h1 className="mt-3 self-center md:self-start font-light">
             Nenhum personagem encontrado.
           </h1>
         ) : (
           <>
-            <div className="w-[90%] md:w-[30%] my-7 md:my-0 avatar flex justify-center items-center">
-              <div className="w-72 md:w-[100%] h-72 md:h-[100%] rounded-full md:rounded-[3rem] ring ring-red-600 ring-offset-2 overflow-hidden">
+            <div className="w-[90%] md:w-[30%] my-7 md:my-0 avatar flex justify-center md:justify-start items-center">
+              <div>
                 <Image
+                  className="w-72 md:w-[100%] h-72 md:h-[100%] rounded-full md:rounded-[3rem] ring ring-red-600 ring-offset-2 overflow-hidden"
                   src={characterData?.image?.url ?? ""}
                   alt={String(characterData?.name)}
                   width={400}
                   height={400}
-                  layout="responsive"
+                  objectFit="cover"
                 />
               </div>
             </div>
