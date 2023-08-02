@@ -6,3 +6,4 @@ export async function GET(req: Request, { params: { character } }: any) {
 
   return NextResponse.json({ data });
 }
+

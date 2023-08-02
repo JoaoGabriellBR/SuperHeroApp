@@ -1,9 +1,10 @@
 import axios from 'axios';
 
-const apiURL =  process.env.NEXT_API_URL || 'http://localhost:3002';
+const apiURL =  process.env.NEXT_API_URL;
 
 const api = axios.create({
   baseURL: apiURL,
+  headers: { "Access-Control-Allow-Origin": "*" }
 });
 
 export default api;
