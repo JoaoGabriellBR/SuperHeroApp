@@ -36,7 +36,7 @@ export default function Home() {
 
   useEffect(() => {
     const character = async () => {
-      const response = await fetchCharacterData("Batman II");
+      const response = await fetchCharacterData("Hellboy");
       setCharacterData(response)
     }
 
