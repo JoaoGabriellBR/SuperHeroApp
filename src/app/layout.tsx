@@ -3,7 +3,7 @@ import "./globals.css";
 import type { Metadata } from "next";
 import { Raleway } from "next/font/google";
 
-const raleway = Raleway({ subsets: ["latin"], weight: "100" });
+const raleway = Raleway({ subsets: ["latin"], weight: "300" });
 
 export const metadata: Metadata = {
   title: "Super Hero App",

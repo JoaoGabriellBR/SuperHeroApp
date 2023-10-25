@@ -3,7 +3,7 @@ import { useState } from "react";
 
 interface OnFunctions {
   onSearch: (data: any) => void;
-  onLoading: (value: any) => void;
+  onLoading: (value: boolean) => void;
 }
 
 export default function Header({ onSearch, onLoading }: OnFunctions) {
@@ -22,7 +22,7 @@ export default function Header({ onSearch, onLoading }: OnFunctions) {
   };
 
   return (
-    <header className="flex flex-col md:flex-row justify-between items-center w-full bg-transparent p-2 md:p-10">
+    <header className="flex flex-col md:flex-row justify-between items-center bg-transparent p-2 md:p-10">
       <h1 className="text-[1.5rem] font-semibold mb-[1rem] md:mb-0">
         Super<span className="text-red-600">Hero</span>
       </h1>
